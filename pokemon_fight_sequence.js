@@ -3,16 +3,22 @@
  */
 
 // Define Pokemon class
-function Pokemon (name, hp, attack) 
-{
+function Pokemon (name, details) {
   this.name = name;
-  this.hp = hp;
-  this.attack = attack;
+  
+  // provide default values to hp and attack if details is not set
+  this.hp = 0;
+  this.attack = 0;
+  
+  // loops through the details objects
+  // if hp and or attack is set in the details object, the values will overwrite the default values from above
+  for ( var detail in details ) {
+    // creates/sets the Pokemon property from the details object equal to the value
+    this[detail] = details[detail];
+  }
 };
-// See what all pokemon says.
-Pokemon.prototype.talk = function () 
-{
-  console.log(Array(4).join(this.name + " "));
+Pokemon.prototype.talk = function () {
+  console.log( Array(4).join(this.name + " ") );
 };
 
 // Define Battle class
@@ -50,9 +56,9 @@ Battle.prototype.fight = function ()
 };
 
 // Create Pikachu
-var pikachu = new Pokemon ("Pikachu", 100, 30);
+var pikachu = new Pokemon ("Pikachu", { hp: 100, attack: 30 });
 // Create Metapod
-var metapod = new Pokemon ("Metapod", 100, 30);
+var metapod = new Pokemon ("Metapod", { hp: 100, attack: 30 });
 
 // Create the battle event
 var battle1 = new Battle(pikachu, metapod);
